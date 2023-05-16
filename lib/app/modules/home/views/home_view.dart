@@ -88,157 +88,175 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
               )),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: locationController.obx(
+        (_) => FloatingActionButton.extended(
           icon: const Icon(Icons.add),
           onPressed: () => Get.toNamed(Routes.ADD_CUSTOMER_FORM),
-          label: const Text('Add Lead')),
+          label: const Text('Add Lead'),
+        ),
+        onError: (error) => const SizedBox.shrink(),
+        onLoading: const SizedBox.shrink(),
+        onEmpty: const SizedBox.shrink(),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-        child: controller.obx(
-          (state) => SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Obx(() => OutlinedButton(
-                    onPressed: () => controller.datePicked(context),
-                    child: Text(controller.startDateString.value.isEmpty
-                        ? 'Pick your interval'
-                        : '${controller.startDateString} to ${controller.endDateString}'))),
-                Text(
-                  'Your Progress!!!',
-                  style: RSTextStyles.h2.copyWith(fontSize: 25),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    DisplayBoxWidget(
-                        title: 'During Interval',
-                        details: InsightsArgument(
-                            showAllDetails: true,
-                            details: state!.first.startToEndDateDetails!,
-                            type: InsightPageType.interval),
-                        value:
-                            state.first.countStartToEndDateDetails.toString()),
-                    DisplayBoxWidget(
-                        title: 'Last 7 days',
-                        details: InsightsArgument(
-                            showAllDetails: true,
-                            details: state.first.previousWeekDetails!,
-                            type: InsightPageType.last7Days),
-                        value: state.first.countPreviousWeekDetails.toString()),
-                    Obx(
-                      () => DisplayBoxWidget(
-                          title: controller.endDateString.value,
-                          details: InsightsArgument(
-                              showAllDetails: true,
-                              details: state.first.endDateDetails!,
-                              date: controller.endDateString.value,
-                              type: InsightPageType.lastDay),
-                          value: state.first.countEndDateDetails.toString()),
-                    ),
-                  ],
-                ),
-                const SizedBox.square(
-                  dimension: 20,
-                ),
-                const Divider(),
-                const SizedBox.square(
-                  dimension: 20,
-                ),
-                Text(
-                  'Your Team\'s Progress',
-                  style: RSTextStyles.h2.copyWith(fontSize: 25),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    DisplayBoxWidget(
-                        title: 'During Interval',
-                        details: InsightsArgument(
-                            showAllDetails: AuthController
-                                    .to.user.value?.authorization.privileged ??
-                                false,
-                            details: state.last.startToEndDateDetails!,
-                            type: InsightPageType.interval),
-                        value:
-                            state.last.countStartToEndDateDetails.toString()),
-                    DisplayBoxWidget(
-                        title: 'Last 7 days',
-                        details: InsightsArgument(
-                            showAllDetails: AuthController
-                                    .to.user.value?.authorization.privileged ??
-                                false,
-                            details: state.last.previousWeekDetails!,
-                            type: InsightPageType.last7Days),
-                        value: state.last.countPreviousWeekDetails.toString()),
-                    Obx(
-                      () => DisplayBoxWidget(
-                          title: controller.endDateString.value,
-                          details: InsightsArgument(
-                              showAllDetails: AuthController.to.user.value
-                                      ?.authorization.privileged ??
-                                  false,
-                              details: state.last.endDateDetails!,
-                              date: controller.endDateString.value,
-                              type: InsightPageType.lastDay),
-                          value: state.last.countEndDateDetails.toString()),
-                    ),
-                  ],
-                ),
-                const SizedBox.square(
-                  dimension: 20,
-                ),
-                locationController.obx(
-                  (state) => Center(
-                    child: Text(
-                      state!,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onBackground
-                              .withOpacity(.5)),
+        child: locationController.obx(
+            (locMessage) => controller.obx(
+                  (state) => SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Obx(() => OutlinedButton(
+                            onPressed: () => controller.datePicked(context),
+                            child: Text(controller.startDateString.value.isEmpty
+                                ? 'Pick your interval'
+                                : '${controller.startDateString} to ${controller.endDateString}'))),
+                        Text(
+                          'Your Progress!!!',
+                          style: RSTextStyles.h2.copyWith(fontSize: 25),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            DisplayBoxWidget(
+                                title: 'During Interval',
+                                details: InsightsArgument(
+                                    showAllDetails: true,
+                                    details:
+                                        state!.first.startToEndDateDetails!,
+                                    type: InsightPageType.interval),
+                                value: state.first.countStartToEndDateDetails
+                                    .toString()),
+                            DisplayBoxWidget(
+                                title: 'Last 7 days',
+                                details: InsightsArgument(
+                                    showAllDetails: true,
+                                    details: state.first.previousWeekDetails!,
+                                    type: InsightPageType.last7Days),
+                                value: state.first.countPreviousWeekDetails
+                                    .toString()),
+                            Obx(
+                              () => DisplayBoxWidget(
+                                  title: controller.endDateString.value,
+                                  details: InsightsArgument(
+                                      showAllDetails: true,
+                                      details: state.first.endDateDetails!,
+                                      date: controller.endDateString.value,
+                                      type: InsightPageType.lastDay),
+                                  value: state.first.countEndDateDetails
+                                      .toString()),
+                            ),
+                          ],
+                        ),
+                        const SizedBox.square(
+                          dimension: 20,
+                        ),
+                        const Divider(),
+                        const SizedBox.square(
+                          dimension: 20,
+                        ),
+                        Text(
+                          'Your Team\'s Progress',
+                          style: RSTextStyles.h2.copyWith(fontSize: 25),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            DisplayBoxWidget(
+                                title: 'During Interval',
+                                details: InsightsArgument(
+                                    showAllDetails: AuthController.to.user.value
+                                            ?.authorization.privileged ??
+                                        false,
+                                    details: state.last.startToEndDateDetails!,
+                                    type: InsightPageType.interval),
+                                value: state.last.countStartToEndDateDetails
+                                    .toString()),
+                            DisplayBoxWidget(
+                                title: 'Last 7 days',
+                                details: InsightsArgument(
+                                    showAllDetails: AuthController.to.user.value
+                                            ?.authorization.privileged ??
+                                        false,
+                                    details: state.last.previousWeekDetails!,
+                                    type: InsightPageType.last7Days),
+                                value: state.last.countPreviousWeekDetails
+                                    .toString()),
+                            Obx(
+                              () => DisplayBoxWidget(
+                                  title: controller.endDateString.value,
+                                  details: InsightsArgument(
+                                      showAllDetails: AuthController
+                                              .to
+                                              .user
+                                              .value
+                                              ?.authorization
+                                              .privileged ??
+                                          false,
+                                      details: state.last.endDateDetails!,
+                                      date: controller.endDateString.value,
+                                      type: InsightPageType.lastDay),
+                                  value: state.last.countEndDateDetails
+                                      .toString()),
+                            ),
+                          ],
+                        ),
+                        const SizedBox.square(
+                          dimension: 20,
+                        ),
+                        Center(
+                          child: Text(
+                            locMessage!,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onBackground
+                                    .withOpacity(.5)),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   onLoading: const Center(child: CircularProgressIndicator()),
                   onError: (error) => Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          error ?? 'Something went wrong',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .error
-                                  .withOpacity(.5)),
-                        ),
-                        const SizedBox.square(
-                          dimension: 10,
-                        ),
-                        if ((locationController.state?.isEmpty ?? false))
-                          RSElevatedButton(
-                              title: 'Open settings',
-                              action: () => openAppSettings()),
-                      ],
+                    child: Text(
+                      error ?? 'Something went wrong',
+                      style: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .error
+                              .withOpacity(.5)),
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
-          onLoading: const Center(child: CircularProgressIndicator()),
-          onError: (error) => Center(
-            child: Text(
-              error ?? 'Something went wrong',
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.error.withOpacity(.5)),
-            ),
-          ),
-        ),
+            onLoading: const Center(child: CircularProgressIndicator()),
+            onError: (error) => Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        error ?? 'Something went wrong',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .error
+                                .withOpacity(.5)),
+                      ),
+                      const SizedBox.square(
+                        dimension: 10,
+                      ),
+                      if ((locationController.state?.isEmpty ?? false))
+                        RSElevatedButton(
+                            title: 'Open settings',
+                            action: () => openAppSettings()),
+                    ],
+                  ),
+                )),
       ),
     );
   }

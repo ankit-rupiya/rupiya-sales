@@ -31,7 +31,7 @@ class AddCustomerFormView extends GetView<AddCustomerFormController> {
                   key: UniqueKey(),
                   children: [
                     RSTextField(
-                      label: 'First name *',
+                      label: 'Name *',
                       initialData:
                           controller.formDataParams.customerFirstName.isNotEmpty
                               ? controller.formDataParams.customerFirstName
@@ -40,7 +40,7 @@ class AddCustomerFormView extends GetView<AddCustomerFormController> {
                           controller.formDataParams
                               .copyWith(customerFirstName: value),
                       validation: (value) =>
-                          cannotBeEmpty(value: value, name: 'First name'),
+                          cannotBeEmpty(value: value, name: 'Name'),
                       inputFormatters: [
                         TextInputFormatter.withFunction((oldValue, newValue) =>
                             RegExp(r"^[a-zA-Z]*$").hasMatch(newValue.text)
@@ -49,7 +49,7 @@ class AddCustomerFormView extends GetView<AddCustomerFormController> {
                       ],
                     ),
                     RSTextField(
-                      label: 'Middle name',
+                      label: 'Father name',
                       initialData: controller
                               .formDataParams.customerMiddleName.isNotEmpty
                           ? controller.formDataParams.customerMiddleName
@@ -65,7 +65,7 @@ class AddCustomerFormView extends GetView<AddCustomerFormController> {
                       ],
                     ),
                     RSTextField(
-                      label: 'Last name *',
+                      label: 'Surname *',
                       initialData:
                           controller.formDataParams.customerLastName.isNotEmpty
                               ? controller.formDataParams.customerLastName
@@ -74,7 +74,7 @@ class AddCustomerFormView extends GetView<AddCustomerFormController> {
                           controller.formDataParams
                               .copyWith(customerLastName: value),
                       validation: (value) =>
-                          cannotBeEmpty(value: value, name: 'Last name'),
+                          cannotBeEmpty(value: value, name: 'Surname'),
                       inputFormatters: [
                         TextInputFormatter.withFunction((oldValue, newValue) =>
                             RegExp(r"^[a-zA-Z]*$").hasMatch(newValue.text)
@@ -92,7 +92,10 @@ class AddCustomerFormView extends GetView<AddCustomerFormController> {
                       keyboardType: TextInputType.phone,
                       validation: (value) => validatePhoneNumber(
                           value: value, name: 'Mobile number'),
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(10),
+                      ],
                     ),
                     Obx(
                       () => controller.showAddress.value
@@ -118,7 +121,7 @@ class AddCustomerFormView extends GetView<AddCustomerFormController> {
                                         controller.selectedVillage = value!,
                                     validator: (value) => cannotBeEmpty(
                                         value: value, name: 'Village'),
-                                    items: controller.villagesMenuEntries),
+                                    items: controller.possibilitiesMenuEntries),
                                 // RSTextField(
                                 //     label: 'Taluka *',
                                 //     onChange: (value) =>

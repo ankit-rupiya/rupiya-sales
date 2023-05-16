@@ -10,7 +10,7 @@ import 'package:sales/core/snack_bar.dart';
 import 'package:sales/utils/validations.dart';
 
 class AddCustomerFormController extends GetxController {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>(debugLabel: 'add leads');
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RxBool showAddress = false.obs;
   String address = '';
   String selectedVillage = '';
@@ -18,9 +18,7 @@ class AddCustomerFormController extends GetxController {
   String selectedDistrict = '';
   String state = '';
   List<String> possibilities = [];
-  List<String> villagesString = [];
   List<DropdownMenuItem<String>> possibilitiesMenuEntries = [];
-  List<DropdownMenuItem<String>> villagesMenuEntries = [];
   RxBool interested = false.obs;
   // List<String> taluka = [];
   // List<String> district = [];
@@ -117,15 +115,15 @@ class AddCustomerFormController extends GetxController {
                 ? tempSet.add(element.division!)
                 : null;
             (element.name?.isNotEmpty ?? false)
-                ? villagesString.add(element.name!)
+                ? tempSet.add(element.name!)
                 : null;
           }
-          villagesString = villagesString.toSet().toList();
-          villagesMenuEntries = villagesString
-              .map<DropdownMenuItem<String>>((element) =>
-                  DropdownMenuItem<String>(
-                      value: element, child: Text(element)))
-              .toList();
+          // villagesString = villagesString.toSet().toList();
+          // villagesMenuEntries = villagesString
+          //     .map<DropdownMenuItem<String>>((element) =>
+          //         DropdownMenuItem<String>(
+          //             value: element, child: Text(element)))
+          //     .toList();
           possibilities = tempSet.toList();
           possibilitiesMenuEntries = possibilities
               .map<DropdownMenuItem<String>>((element) =>

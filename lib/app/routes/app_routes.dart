@@ -10,6 +10,7 @@ abstract class Routes {
   static const INSIGHTS = _Paths.INSIGHTS;
   static const MAP_TRACK = _Paths.MAP_TRACK;
   static const SPLASH = _Paths.SPLASH;
+  static const UPDATE_CUSTOMER = _Paths.UPDATE_CUSTOMER;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const INSIGHTS = '/insights';
   static const MAP_TRACK = '/map-track';
   static const SPLASH = '/splash';
+  static const UPDATE_CUSTOMER = '/update-customer';
 }

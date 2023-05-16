@@ -1,3 +1,5 @@
+import 'package:sales/app/data/update_customer_params.dart';
+
 class SalesResponse {
   String? status;
   int? errorCode;
@@ -121,7 +123,7 @@ class EndDateDetails {
   String? cFarmAddress;
   String? cropName;
   String? landArea;
-  String? createdDatetime;
+  String? createdDateTime;
   int interested;
 
   EndDateDetails(
@@ -135,8 +137,49 @@ class EndDateDetails {
       this.cFarmAddress,
       this.cropName,
       this.landArea,
-      this.createdDatetime,
+      this.createdDateTime,
       this.interested = 0});
+
+  EndDateDetails copyWith({
+    int? uniqueId,
+    String? trxId,
+    String? salesmanName,
+    String? cFirstName,
+    String? cMiddleName,
+    String? cLastName,
+    String? cMobileNo,
+    String? cFarmAddress,
+    String? cropName,
+    String? landArea,
+    String? createdDateTime,
+    int? interested,
+  }) {
+    return EndDateDetails(
+      uniqueId: uniqueId ?? this.uniqueId,
+      trxId: trxId ?? this.trxId,
+      salesmanName: salesmanName ?? this.salesmanName,
+      cFirstName: cFirstName ?? this.cFirstName,
+      cMiddleName: cMiddleName ?? this.cMiddleName,
+      cLastName: cLastName ?? this.cLastName,
+      cMobileNo: cMobileNo ?? this.cMobileNo,
+      cFarmAddress: cFarmAddress ?? this.cFarmAddress,
+      cropName: cropName ?? this.cropName,
+      landArea: landArea ?? this.landArea,
+      createdDateTime: createdDateTime ?? this.createdDateTime,
+      interested: interested ?? this.interested,
+    );
+  }
+
+  UpdateCustomerParams toUpdateParams() {
+    return UpdateCustomerParams(
+      salesmanName: salesmanName,
+      trxId: trxId,
+      address: cFarmAddress,
+      cropName: cropName,
+      landArea: landArea,
+      interested: interested.toString(),
+    );
+  }
 
   // EndDateDetails.fromJson(Map<String, dynamic> json) {
   //   uniqueId = json['unique_id'];
@@ -165,7 +208,7 @@ class EndDateDetails {
       cFarmAddress: json['c_farm_address'],
       cropName: json['crop_name'],
       landArea: json['land_area'],
-      createdDatetime: json['created_datetime'],
+      createdDateTime: json['created_datetime'],
       interested: json['intrested'] ?? 0,
     );
   }
@@ -182,7 +225,7 @@ class EndDateDetails {
     data['c_farm_address'] = cFarmAddress;
     data['crop_name'] = cropName;
     data['land_area'] = landArea;
-    data['created_datetime'] = createdDatetime;
+    data['created_datetime'] = createdDateTime;
     data['intrested'] = interested;
     return data;
   }

@@ -12,7 +12,10 @@ class RupiyaAuthInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     if (AuthController.to.user.value == null) {
-      options.headers.addAll({'Tra-ID': '123', 'Device-ID': 'mobile'});
+      options.headers.addAll({
+        'Tra-ID': '9579155101c946118701aa6dbd60a32116829154451',
+        'Device-ID': 'mobile'
+      });
     } else if (options.path == ApiEndpoints.logOut) {
     } else {
       options.headers.addAll({

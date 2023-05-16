@@ -13,6 +13,8 @@ import '../modules/map_track/bindings/map_track_binding.dart';
 import '../modules/map_track/views/map_track_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/update_customer/bindings/update_customer_binding.dart';
+import '../modules/update_customer/views/update_customer_view.dart';
 
 part 'app_routes.dart';
 
@@ -56,6 +58,18 @@ class AppPages {
       name: _Paths.SPLASH,
       page: () => const SplashView(),
       binding: SplashBinding(),
+    ),
+    GetPage(
+      name: _Paths.UPDATE_CUSTOMER,
+      page: () => const UpdateCustomerView(),
+      binding: UpdateCustomerBinding(),
+      children: [
+        GetPage(
+          name: _Paths.UPDATE_CUSTOMER,
+          page: () => const UpdateCustomerView(),
+          binding: UpdateCustomerBinding(),
+        ),
+      ],
     ),
   ];
 }

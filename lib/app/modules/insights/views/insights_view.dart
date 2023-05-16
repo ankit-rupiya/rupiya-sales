@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:sales/app/modules/auth/controllers/auth_controller.dart';
 import 'package:sales/app/modules/insights/views/widgets/filter_dialog.dart';
+import 'package:sales/app/routes/app_pages.dart';
 import 'package:sales/constants/enums.dart';
 
 import '../controllers/insights_controller.dart';
@@ -39,6 +40,18 @@ class InsightsView extends GetView<InsightsController> {
                       dividerThickness: 0,
                       showBottomBorder: true,
                       columns: <DataColumn>[
+                        if (AuthController
+                                .to.user.value!.authorization.privileged &&
+                            controller.arguments.showAllDetails)
+                          DataColumn(
+                            onSort: (columnIndex, ascending) {},
+                            label: const Expanded(
+                              child: Text(
+                                'Update',
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              ),
+                            ),
+                          ),
                         if (AuthController
                                 .to.user.value!.authorization.privileged &&
                             controller.arguments.showAllDetails)
@@ -131,6 +144,13 @@ class InsightsView extends GetView<InsightsController> {
                                   if (AuthController.to.user.value!
                                           .authorization.privileged &&
                                       controller.arguments.showAllDetails)
+                                    DataCell(const Icon(Icons.edit), onTap: () {
+                                      Get.toNamed(Routes.UPDATE_CUSTOMER,
+                                          arguments: state[index]);
+                                    }),
+                                  if (AuthController.to.user.value!
+                                          .authorization.privileged &&
+                                      controller.arguments.showAllDetails)
                                     DataCell(Text(state[index].salesmanName!)),
                                   DataCell(Text(state[index].cFirstName!)),
                                   DataCell(Text(controller
@@ -147,7 +167,7 @@ class InsightsView extends GetView<InsightsController> {
                                   DataCell(Text(
                                       DateFormat('dd MMMM yyyy hh:mm a').format(
                                           DateTime.parse(
-                                                  state[index].createdDatetime!)
+                                                  state[index].createdDateTime!)
                                               .toLocal()))),
                                 ],
                               ))),

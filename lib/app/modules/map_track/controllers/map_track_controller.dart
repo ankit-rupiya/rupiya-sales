@@ -47,10 +47,13 @@ class MapTrackController extends GetxController
   }
 
   void getLocationLogs() async {
+    markers.clear();
+    polyline.clear();
     MapTrackRepository.getSalesmanMapData(
         salesman: selectedSalesman,
         datetime: selectedDate,
         onSuccess: (_, json) {
+          change([], status: RxStatus.loading());
           LocationLogsResponse res = LocationLogsResponse.fromJson(json);
           if ((res.data?.isEmpty ?? true) ||
               (res.data?.first.locationDetails?.isEmpty ?? true)) {
